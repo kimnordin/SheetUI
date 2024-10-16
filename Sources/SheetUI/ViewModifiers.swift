@@ -8,11 +8,11 @@
 import SwiftUI
 
 extension View {
-    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape(RoundedCorners(radius: radius, corners: corners))
+    public func dynamicSheet<SheetContent: View>(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> SheetContent) -> some View {
+        self.modifier(DynamicSheetModifier(isPresented: isPresented, sheetContent: content))
     }
     
-    func dynamicSheet<SheetContent: View>(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> SheetContent) -> some View {
-        self.modifier(DynamicSheetModifier(isPresented: isPresented, sheetContent: content))
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape(RoundedCorners(radius: radius, corners: corners))
     }
 }
