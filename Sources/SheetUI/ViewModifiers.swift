@@ -12,7 +12,7 @@ extension View {
         self.modifier(DynamicSheet(isPresented: isPresented, sheetContent: content))
     }
     
-    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+    internal func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape(RoundedCorners(radius: radius, corners: corners))
     }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ViewHeightReader: ViewModifier {
+internal struct ViewHeightReader: ViewModifier {
     @Binding var height: CGFloat
 
     func body(content: Content) -> some View {

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DynamicSheet<SheetContent: View>: ViewModifier {
+internal struct DynamicSheet<SheetContent: View>: ViewModifier {
     @State private var contentHeight: CGFloat = .zero
     @State private var dragOffset: CGFloat = .zero
     @State private var isVisible: Bool = false
