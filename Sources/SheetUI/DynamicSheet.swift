@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DynamicSheetModifier<SheetContent: View>: ViewModifier {
+struct DynamicSheet<SheetContent: View>: ViewModifier {
     @State private var contentHeight: CGFloat = .zero
     @State private var dragOffset: CGFloat = .zero
     @State private var isVisible: Bool = false
@@ -57,7 +57,7 @@ struct DynamicSheetModifier<SheetContent: View>: ViewModifier {
         }
         .frame(height: contentHeight)
         .frame(maxWidth: .infinity)
-        .background(.white)
+        .background(Color.white)
         .cornerRadius(16, corners: [.topLeft, .topRight])
         .offset(y: dragOffset)
         .gesture(dragGesture())

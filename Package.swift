@@ -7,7 +7,7 @@ let package = Package(
     name: "SheetUI",
     platforms: [
         .macOS(.v10_13),
-        .iOS(.v15)
+        .iOS(.v14)
     ],
     products: [
         .library(name: "SheetUI", targets: ["SheetUI"]),

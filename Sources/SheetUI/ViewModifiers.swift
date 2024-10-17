@@ -9,7 +9,7 @@ import SwiftUI
 
 extension View {
     public func dynamicSheet<SheetContent: View>(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> SheetContent) -> some View {
-        self.modifier(DynamicSheetModifier(isPresented: isPresented, sheetContent: content))
+        self.modifier(DynamicSheet(isPresented: isPresented, sheetContent: content))
     }
     
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
