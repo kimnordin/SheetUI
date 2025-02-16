@@ -77,7 +77,9 @@ internal struct DynamicSheet<SheetContent: View>: ViewModifier {
             dragOffset = contentHeight
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            isVisible = false
+            if !isPresented {
+                isVisible = false
+            }
         }
     }
     
