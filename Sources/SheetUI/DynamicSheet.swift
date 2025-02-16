@@ -13,6 +13,7 @@ internal struct DynamicSheet<SheetContent: View>: ViewModifier {
     @State private var isVisible: Bool = false
     @Binding var isPresented: Bool
     
+    let backgroundColor: Color
     let sheetContent: () -> SheetContent
     
     private var scrollThreshold: CGFloat {
@@ -57,7 +58,7 @@ internal struct DynamicSheet<SheetContent: View>: ViewModifier {
         }
         .frame(height: contentHeight)
         .frame(maxWidth: .infinity)
-        .background(Color.white)
+        .background(backgroundColor)
         .cornerRadius(16, corners: [.topLeft, .topRight])
         .offset(y: dragOffset)
         .gesture(dragGesture())
