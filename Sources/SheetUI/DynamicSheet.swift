@@ -14,6 +14,7 @@ internal struct DynamicSheet<SheetContent: View>: ViewModifier {
     @Binding var isPresented: Bool
     
     let backgroundColor: Color
+    let safeAreaEdges: Edge.Set
     let sheetContent: () -> SheetContent
     
     private var scrollThreshold: CGFloat {
@@ -44,7 +45,7 @@ internal struct DynamicSheet<SheetContent: View>: ViewModifier {
                     Spacer()
                     SheetView
                 }
-                .ignoresSafeArea(edges: .bottom)
+                .ignoresSafeArea(edges: safeAreaEdges)
             }
         }
     }
