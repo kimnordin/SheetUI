@@ -10,7 +10,6 @@ import SwiftUI
 internal struct DynamicSheet<SheetContent: View>: ViewModifier {
     @State private var contentHeight: CGFloat = .zero
     @State private var dragOffset: CGFloat = .zero
-    @State private var isVisible: Bool = false
     @Binding var isPresented: Bool
     
     let backgroundColor: Color
@@ -24,29 +23,22 @@ internal struct DynamicSheet<SheetContent: View>: ViewModifier {
     func body(content: Content) -> some View {
         content
             .overlay(SheetOverlay)
-            .onAppear() {
-                if isPresented {
-                    displaySheet()
-                }
-            }
-            .onChange(of: isPresented) { presented in
-                if presented {
-                    displaySheet()
-                } else {
-                    dismissSheet()
+            .animation(.easeInOut(duration: 0.3), value: isPresented)
+            .onChange(of: isPresented) {
+                if !$0 {
+                    dragOffset = 0
                 }
             }
     }
     
     @ViewBuilder private var SheetOverlay: some View {
-        if isVisible {
-            ZStack {
-                VStack {
-                    Spacer()
-                    SheetView
-                }
-                .ignoresSafeArea(edges: safeAreaEdges)
+        if isPresented {
+            VStack {
+                Spacer()
+                SheetView
             }
+            .ignoresSafeArea(edges: safeAreaEdges)
+            .transition(.move(edge: .bottom))
         }
     }
     
@@ -63,37 +55,12 @@ internal struct DynamicSheet<SheetContent: View>: ViewModifier {
         .cornerRadius(16, corners: [.topLeft, .topRight])
         .offset(y: dragOffset)
         .gesture(dragGesture())
-        .animation(.easeInOut(duration: 0.3), value: dragOffset)
-    }
-    
-    private func displaySheet() {
-        isVisible = true
-        withAnimation {
-            dragOffset = 0
-        }
-    }
-    
-    private func dismissSheet() {
-        withAnimation {
-            dragOffset = contentHeight
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            if !isPresented {
-                isVisible = false
-            }
-        }
     }
     
     private func dragGesture() -> some Gesture {
         DragGesture()
             .onChanged { value in
-                let maxHeight = contentHeight - value.translation.height
-                if maxHeight > contentHeight {
-                    dragOffset = 0
-                } else {
-                    contentHeight = contentHeight
-                    dragOffset = value.translation.height
-                }
+                dragOffset = max(0, value.translation.height)
             }
             .onEnded { value in
                 if dragOffset > scrollThreshold {
@@ -101,7 +68,6 @@ internal struct DynamicSheet<SheetContent: View>: ViewModifier {
                 } else {
                     withAnimation {
                         dragOffset = 0
-                        contentHeight = contentHeight
                     }
                 }
             }
