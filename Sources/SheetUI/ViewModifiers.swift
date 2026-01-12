@@ -26,7 +26,7 @@ extension View {
      - parameter safeAreaEdges: The set of edges to ignore.
      - parameter content: A closure returning the content of the sheet for the provided item.
      */
-    public func dynamicSheet<Item: Identifiable & Sendable, SheetContent: View>(item: Binding<Item?>, backgroundColor: Color = .clear, safeAreaEdges: Edge.Set = [], @ViewBuilder content: @escaping (Item) -> SheetContent) -> some View {
+    public func dynamicSheet<Item: Identifiable, SheetContent: View>(item: Binding<Item?>, backgroundColor: Color = .clear, safeAreaEdges: Edge.Set = [], @ViewBuilder content: @escaping (Item) -> SheetContent) -> some View {
         self.modifier(DynamicSheet(isPresented: item.isPresented(), backgroundColor: backgroundColor, safeAreaEdges: safeAreaEdges) {
             if let value = item.wrappedValue {
                 content(value)

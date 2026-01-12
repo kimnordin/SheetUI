@@ -13,8 +13,8 @@ extension Binding {
      - `true` when the value *isn't* `nil`.
      - `false` when the value *is* `nil`.
      */
-    func isPresented<T: Sendable>() -> Binding<Bool> where Value == T? {
-        Binding<Bool> {
+    @MainActor func isPresented<T>() -> Binding<Bool> where Value == T? {
+        return Binding<Bool> {
             self.wrappedValue != nil
         } set: { newValue in
             if !newValue {
