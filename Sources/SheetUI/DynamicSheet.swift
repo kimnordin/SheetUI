@@ -20,6 +20,13 @@ internal struct DynamicSheet<SheetContent: View>: ViewModifier {
         return contentHeight / 2
     }
     
+    init(isPresented: Binding<Bool>, backgroundColor: Color, safeAreaEdges: Edge.Set, @ViewBuilder sheetContent: @escaping () -> SheetContent) {
+        _isPresented = isPresented
+        self.backgroundColor = backgroundColor
+        self.safeAreaEdges = safeAreaEdges
+        self.sheetContent = sheetContent
+    }
+    
     func body(content: Content) -> some View {
         content
             .overlay(SheetOverlay)
